@@ -57,8 +57,8 @@ export function PlacaTab({ s }) {
     return () => window.removeEventListener('mouseup', up)
   })
 
-  const guardar = () => {
-    const m = muestra.trim()
+  const guardar = (elegida) => {
+    const m = (typeof elegida === 'string' ? elegida : muestra).trim()
     if (!m) return s.avisar('Tenés que indicar una muestra.', 'error')
     const nombre = s.muestras.find((x) => x.toLowerCase() === m.toLowerCase()) || m
     if (!s.muestras.includes(nombre)) s.setMuestras([...s.muestras, nombre])
@@ -147,6 +147,14 @@ export function PlacaTab({ s }) {
             <button onClick={() => setSel(null)}>Cancelar</button>
             {sel.some(cfgDe) && <button className="peligro" onClick={quitar}>Quitar</button>}
             <button className="primario" onClick={guardar}>Guardar</button></>}>
+          <div onKeyDown={(e) => {
+            // Enter: guarda la muestra elegida y cierra la ventana (tambiÃ©n estando sobre una opciÃ³n de la lista o una casilla)
+            if (e.key !== 'Enter' || e.nativeEvent.isComposing) return
+            const t = e.target
+            if (t.tagName === 'BUTTON' && t.getAttribute('role') !== 'option') return
+            e.preventDefault()
+            guardar(t.getAttribute('role') === 'option' ? t.dataset.muestra : undefined)
+          }}>
           {sel.length > 1 && <p><b>Pocillos:</b> {sel.join(', ')}</p>}
           {sel.length > 1 && (() => {
             const cnt = {}
@@ -164,7 +172,7 @@ export function PlacaTab({ s }) {
           })()}
           <Campo label="Muestra">
             <input autoFocus value={muestra} placeholder="Elegí una muestra de la lista o escribí una nueva"
-              onChange={(e) => setMuestra(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && guardar()} />
+              onChange={(e) => setMuestra(e.target.value)} />
           </Campo>
           {(() => {
             const todas = [...new Set([...s.muestras, ...s.config.map((c) => c.Muestra)])]
@@ -175,7 +183,7 @@ export function PlacaTab({ s }) {
                   {todas.map((m) => {
                     const n = s.config.filter((c) => c.Muestra === m).length
                     return (
-                      <button key={m} role="option" aria-selected={m.toLowerCase() === muestra.trim().toLowerCase()}
+                      <button key={m} role="option" data-muestra={m} aria-selected={m.toLowerCase() === muestra.trim().toLowerCase()}
                         className={m.toLowerCase() === muestra.trim().toLowerCase() ? 'on' : ''} onClick={() => setMuestra(m)}>
                         <span>{m}</span>{n > 0 && <small>{n} {n === 1 ? 'pocillo' : 'pocillos'}</small>}
                       </button>
@@ -192,6 +200,8 @@ export function PlacaTab({ s }) {
             <span>Definir como blanco{blanco === null && <small>Mixto: algunos pocillos son blanco y otros no. Si no lo cambiás, cada uno conserva su estado.</small>}</span>
           </label>}
           {!s.sinReplicas && <p className="ayuda">{sel.length > 1 ? 'A cada pocillo se le asigna un número de réplica automático, en orden por filas.' : 'La réplica se asigna sola según cuántas veces uses esta muestra.'}</p>}
+          <p className="ayuda">ElegÃ­ la muestra de la lista (o escribila) y apretÃ¡ <b>Enter</b>: se guarda y se cierra la ventana.</p>
+          </div>
         </Modal>
       )}
       {confirmar && (

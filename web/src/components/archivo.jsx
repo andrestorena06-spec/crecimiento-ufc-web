@@ -1,3 +1,4 @@
+import { ACEPTA_LIBRO } from '../libro.js'
 import { useRef, useState } from 'react'
 import { Campo, Modal, Select } from './ui.jsx'
 import { aCSV, descargarBlob, descargarTexto, fmt, pocillos96 } from '../utils.js'
@@ -84,9 +85,9 @@ export function ArchivoTab({ s }) {
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => { e.preventDefault(); abrir(e.dataTransfer.files) }}>
           <strong>{cargando ? 'Leyendo…' : 'Soltá uno o varios Excel acá, o hacé clic para elegirlos'}</strong>
-          <span>Solo Excel en formato nuevo (.xlsx). Cada archivo (o cada hoja con una curva) se agrega como un experimento. Formatos del lector: «Time [s]» con los pocillos A1 a H12, columna de tiempo con los pocillos como encabezados, o bloques «T=0, T=1…» con la matriz A..H de cada tiempo.</span>
+          <span>Excel o LibreOffice (.xlsx, .xls, .odsâ€¦). Cada archivo (o cada hoja con una curva) se agrega como un experimento. Formatos del lector: «Time [s]» con los pocillos A1 a H12, columna de tiempo con los pocillos como encabezados, o bloques «T=0, T=1…» con la matriz A..H de cada tiempo.</span>
         </div>
-        <input ref={inputRef} type="file" multiple hidden accept=".xlsx"
+        <input ref={inputRef} type="file" multiple hidden accept={ACEPTA_LIBRO}
           onChange={(e) => { abrir(e.target.files, destinoRef.current); e.target.value = ''; destinoRef.current = null }} />
 
         {s.exps.length > 0 && (

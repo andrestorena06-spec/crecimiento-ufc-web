@@ -1,3 +1,4 @@
+import { ACEPTA_LIBRO } from '../libro.js'
 import { useMemo, useRef, useState } from 'react'
 import { LineChart } from './charts.jsx'
 import { Campo, Check, Num, Panel, Select } from './ui.jsx'
@@ -325,7 +326,7 @@ export function UfcTab({ s }) {
           <button onClick={() => importRef.current.click()}>Importar planilla (.xlsx)</button>
           <button onClick={exportar} disabled={!ufc.layout.length}>Exportar a Excel</button>
         </div>
-        <input ref={importRef} type="file" hidden accept=".xlsx" onChange={(e) => { e.target.files[0] && importar(e.target.files[0]); e.target.value = '' }} />
+        <input ref={importRef} type="file" hidden accept={ACEPTA_LIBRO} onChange={(e) => { e.target.files[0] && importar(e.target.files[0]); e.target.value = '' }} />
       </Panel>
       <div className="principal">
         <div className="subtabs">

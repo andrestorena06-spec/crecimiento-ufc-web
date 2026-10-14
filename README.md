@@ -14,7 +14,7 @@ Chrome o Firefox. No requiere instalar nada.
 ## Qué hace
 - **Varios experimentos a la vez** (barra de pestañas arrastrables, con doble clic para renombrar). Cada experimento
   tiene su curva de OD y su recuento de UFC. También se puede crear un experimento solo con UFC.
-- **Excel en formato nuevo (.xlsx) únicamente.** Lee las curvas del lector («Time [s]» con pocillos A1..H12, columna de
+- **Planillas de Excel o LibreOffice** (.xlsx, .xls, .xlsm, .xlsb, .ods). Lee las curvas del lector («Time [s]» con pocillos A1..H12, columna de
   tiempo con los pocillos como encabezados, o bloques «T=0, T=1…» con la matriz A..H de cada tiempo).
 - **Curvas de crecimiento (OD)**: configuración de pocillos por arrastre, preprocesado y control de calidad (blanco,
   Hampel, OD máxima, suavizado, normalización), gráficos, μmax, tiempo de duplicación, lag, K, AUC, fases, mapa de

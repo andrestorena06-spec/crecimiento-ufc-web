@@ -1,3 +1,4 @@
+import { ACEPTA_LIBRO } from './libro.js'
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { ArchivoTab } from './components/archivo.jsx'
 import { PlacaTab } from './components/placa.jsx'
@@ -456,7 +457,7 @@ export default function App() {
           ))}
           <button className="agregar-placa" onClick={() => inputExps.current.click()}>+ Agregar Excel</button>
           <button className="agregar-placa" onClick={nuevoExperimentoUfc}>+ Experimento solo UFC</button>
-          <input ref={inputExps} type="file" multiple hidden accept=".xlsx"
+          <input ref={inputExps} type="file" multiple hidden accept={ACEPTA_LIBRO}
             onChange={(e) => { cargarArchivos(e.target.files); e.target.value = '' }} />
         </div>
         <Vista s={s} />
